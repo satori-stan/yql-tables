@@ -53,11 +53,11 @@
 				}
 				colNames = colNames.substring(1);
 				results = y.query("select * from csv(2,0) where url=@url and columns=@columnsNames",{url:encodedUrl,columnsNames:colNames});
-                                y.log(results);
-				var quotes = <quotes symbol={symbol}></quotes>;
+                                y.log({symbol});
+				var quotes = <quotes symbol={symbol} \>;
 				rows=results.results.row;
 				for each (var row in rows) {
-					quotes.quote += <quote date={row.Date.text().toString()}>{row.*}</quote>;
+					quotes.appendChild(<quote date={row.Date.text().toString()}>{row.*}</quote>);
 				}
 				response.object = quotes;
 				
