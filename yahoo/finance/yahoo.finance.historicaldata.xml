@@ -53,6 +53,7 @@
 				}
 				colNames = colNames.substring(1);
 				results = y.query("select * from csv(2,0) where url=@url and columns=@columnsNames",{url:encodedUrl,columnsNames:colNames});
+                                y.log(results);
 				var quotes = <quotes symbol={symbol}></quotes>;
 				rows=results.results.row;
 				for each (var row in rows) {
