@@ -53,12 +53,11 @@
 				}
 				colNames = colNames.substring(1);
 				results = y.query("select * from csv(2,0) where url=@url and columns=@columnsNames",{url:encodedUrl,columnsNames:colNames});
-				var quotes = <quotes symbol={s}>;
+				var quotes = <quotes symbol={s}></quotes>;
 				rows=results.results.row;
 				for each (var row in rows) {
 					quotes.quote += <quote date={row.Date.text().toString()}>{row.*}</quote>;
 				}
-                                quotes += </quotes>;
 				response.object = quotes;
 				
 				function getDay(date) {
