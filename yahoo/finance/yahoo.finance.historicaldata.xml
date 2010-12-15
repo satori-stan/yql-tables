@@ -58,9 +58,8 @@
 				rows=results.results.row;
                                 var rowPosition = 0;
 				for each (var row in rows) {
-					quotes.quote[rowPosition] =
-                                            <quote date={row.Date.text().toString()}>{row.*}</quote>;
-                                        rowPosition++;
+					quotes.appendChild(<quote date={row.Date.text().toString()}>{row.*}</quote>);
+                                        //rowPosition++;
 				}
 				response.object = quotes;
 				
