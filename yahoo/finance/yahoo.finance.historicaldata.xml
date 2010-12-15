@@ -6,7 +6,7 @@
 		<sampleQuery>select * from ydata where symbol = "YHOO" and startDate = "2009-09-11" and endDate = "2010-03-10"</sampleQuery>
 	</meta>
 	<bindings>
-		<select itemPath="quotes.quote" produces="XML">
+		<select itemPath="quotes" produces="XML">
 			<urls><url>http://ichart.finance.yahoo.com/table.csv</url></urls>
 			<inputs>
 				<key id='s' as='symbol' type='xs:string' paramType='query' required='true'/>
@@ -53,7 +53,7 @@
 				}
 				colNames = colNames.substring(1);
 				results = y.query("select * from csv(2,0) where url=@url and columns=@columnsNames",{url:encodedUrl,columnsNames:colNames});
-                                y.log(symbol);
+                                //y.log(symbol);
 				var quotes = <quotes symbol={symbol} />;
 				rows=results.results.row;
                                 var rowPosition = 0;
