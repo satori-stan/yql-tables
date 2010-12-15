@@ -56,8 +56,11 @@
                                 y.log(symbol);
 				var quotes = <quotes symbol={symbol} \>;
 				rows=results.results.row;
+                                var rowPosition = 0;
 				for each (var row in rows) {
-					quotes.appendChild(<quote date={row.Date.text().toString()}>{row.*}</quote>);
+					quotes.quote[rowPosition] =
+                                            <quote date={row.Date.text().toString()}>{row.*}</quote>;
+                                        rowPosition++;
 				}
 				response.object = quotes;
 				
