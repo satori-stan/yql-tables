@@ -56,7 +56,7 @@
 				var quotes = <quotes symbol={symbol} />;
 				rows=results.results.row;
 				for each (var row in rows) {
-					quotes.appendChild(<quote date={row.Date.text().toString()}>{row.*.(name() !== "Date")}</quote>);
+					quotes.appendChild(<quote date={row.Date.text().toString()}>{row.*.(localName() !== "Date")}</quote>);
 				}
 				response.object = quotes;
 				
