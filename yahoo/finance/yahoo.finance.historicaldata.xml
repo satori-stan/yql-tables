@@ -56,12 +56,14 @@
 				var quotes = <quotes symbol={symbol} />;
 				rows=results.results.row;
 				for each (var row in rows) {
-					//quotes.appendChild(<quote date={row.Date.text().toString()}>{row.*}</quote>);
+					quotes.appendChild(<quote date={row.Date.text().toString()}>{row.*}</quote>);
+                                        /*
 					var this_node = quotes.appendChild(<quote date={row.Date.text().toString()} />);
                                         for each (var item = 1; item < row.length; item ++) {
                                                 var node_name = row[item].name;
 						this_node.appendChild(row.item);
 					}
+                                        */
 				}
 				response.object = quotes;
 				
