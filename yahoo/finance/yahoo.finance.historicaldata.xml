@@ -5,6 +5,10 @@
 		<description>Yahoo Finance Stock historical prices</description>
 		<sampleQuery>select * from ydata where symbol = "YHOO" and startDate = "2009-09-11" and endDate = "2010-03-10"</sampleQuery>
 	</meta>
+        <execute><![CDATA[
+                var colum_names = '';
+                var have_column_names = false;
+        ]]></execute>
 	<bindings>
 		<select itemPath="quotes" produces="XML">
 			<urls><url>http://ichart.finance.yahoo.com/table.csv</url></urls>
@@ -42,7 +46,21 @@
 				encodedUrl = encodedUrl.replace('e=30','e=' + getDay(endDate));
 				encodedUrl = encodedUrl.replace('f=2010','f=' + getYear(endDate));
 				
-				var results = y.query("select * from csv(2,0) where url=@url",{url:encodedUrl});
+                                var results;
+                                var rows, row, item;
+                                if (!have_column_names){
+                                    results = y.query("select * from csv(0,1) where url=@url",{url:encodedUrl});
+				    rows=results.results.row;
+				    for each (row in rows) {					
+				        for each (item in row.*) {
+					    var txt = item.text().toString();
+					    column_names=column_names + ',' + txt.replace(' ', '_');
+					}
+				    }
+                                    column_names = column_names.substring(1);
+                                    have_column_names = true;
+                                }
+				results = y.query("select * from csv(2,0) where url=@url and columns=@columnsNames",{url:encodedUrl,columnsNames:column_names});
 				/*
 				ichart.finance.yahoo.com column mapping
 				0 Date
