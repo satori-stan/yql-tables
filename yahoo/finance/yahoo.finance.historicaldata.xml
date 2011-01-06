@@ -6,7 +6,7 @@
 		<sampleQuery>select * from ydata where symbol = "YHOO" and startDate = "2009-09-11" and endDate = "2010-03-10"</sampleQuery>
 	</meta>
         <execute><![CDATA[
-                var colum_names = '';
+                var column_names = '';
                 var have_column_names = false;
         ]]></execute>
 	<bindings>
