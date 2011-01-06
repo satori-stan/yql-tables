@@ -42,21 +42,26 @@
 				encodedUrl = encodedUrl.replace('e=30','e=' + getDay(endDate));
 				encodedUrl = encodedUrl.replace('f=2010','f=' + getYear(endDate));
 				
-				var results = y.query("select * from csv(0,1) where url=@url",{url:encodedUrl});
-				var colNames=''; 
-				var rows=results.results.row;
-				for each (var row in rows) {					
-					for each (var item in row.*) {
-						var txt = item.text().toString();
-						colNames=colNames + ',' + txt.replace(' ', '_');
-					}
-				}
-				colNames = colNames.substring(1);
-				results = y.query("select * from csv(2,0) where url=@url and columns=@columnsNames",{url:encodedUrl,columnsNames:colNames});
+				var results = y.query("select * from csv(2,0) where url=@url",{url:encodedUrl});
+				/*
+				ichart.finance.yahoo.com column mapping
+				0 Date
+				1 Open
+				2 Low
+				3 High
+				4 Close
+				5 Volume
+				6 Adj Close
+				*/
 				var quotes = <quotes symbol={symbol} />;
 				rows=results.results.row;
 				for each (var row in rows) {
-					quotes.appendChild(<quote date={row.Date.text().toString()}>{row.*}</quote>);
+					//quotes.appendChild(<quote date={row.Date.text().toString()}>{row.*}</quote>);
+					var this_node = quotes.appendChild(<quote date={row.Date.text().toString()} />);
+                                        for each (var item = 1; item < row.length; item ++) {
+                                                var node_name = row[item].name;
+						this_node.appendChild(row.item);
+					}
 				}
 				response.object = quotes;
 				
