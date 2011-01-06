@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <table xmlns="http://query.yahooapis.com/v1/schema/table.xsd">
 	<meta>
-		<author>Satori-stan</author>
+		<author>Satori-stan based on yahoo.finance.historicaldata</author>
 		<description>Yahoo Finance Stock historical prices</description>
-		<sampleQuery>select * from ydata where symbol = "YHOO" and startDate = "2009-09-11" and endDate = "2010-03-10"</sampleQuery>
+		<sampleQuery>select * from ydata where symbol in ("YHOO","MSFT") and startDate = "2009-09-11" and endDate = "2010-03-10"</sampleQuery>
 	</meta>
         <execute><![CDATA[
                 var column_names = '';
@@ -46,20 +46,21 @@
 				encodedUrl = encodedUrl.replace('e=30','e=' + getDay(endDate));
 				encodedUrl = encodedUrl.replace('f=2010','f=' + getYear(endDate));
 				
-                                var results;
-                                var rows, row, item;
-                                if (!have_column_names){
-                                    results = y.query("select * from csv(0,1) where url=@url",{url:encodedUrl});
+				y.log(have_column_names);
+				var results;
+				var rows, row, item;
+				if (!have_column_names){
+					results = y.query("select * from csv(0,1) where url=@url",{url:encodedUrl});
 				    rows=results.results.row;
 				    for each (row in rows) {					
 				        for each (item in row.*) {
-					    var txt = item.text().toString();
-					    column_names=column_names + ',' + txt.replace(' ', '_');
-					}
+							var txt = item.text().toString();
+							column_names=column_names + ',' + txt.replace(' ', '_');
+						}
 				    }
-                                    column_names = column_names.substring(1);
-                                    have_column_names = true;
-                                }
+					column_names = column_names.substring(1);
+					have_column_names = true;
+				}
 				results = y.query("select * from csv(2,0) where url=@url and columns=@columnsNames",{url:encodedUrl,columnsNames:column_names});
 				/*
 				ichart.finance.yahoo.com column mapping
