@@ -75,7 +75,7 @@
 					for each (item in row.*) {
 						if (unique_columns > 0){
 							var node_name = column_names[unique_columns];
-							y.log(this_node@["date"] + '$ ' + node_name + ':' + item);
+							y.log(this_node.@["date"] + '$ ' + node_name + ':' + item);
 							this_node += <{node_name}>{item}</{node_name}>;
 						}
 						unique_columns++;
