@@ -74,7 +74,7 @@
 					var unique_columns = 0;
 					for each (item in row.*) {
 						if (unique_columns > 0){
-							this_node.appendChild(<{column_names[unique_columns]}>item</{column_names[unique_columns]}>);
+							this_node += <{column_names[unique_columns]}>item</{column_names[unique_columns]}>;
 						}
 						unique_columns++;
 					}
