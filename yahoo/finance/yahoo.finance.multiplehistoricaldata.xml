@@ -5,10 +5,6 @@
 		<description>Yahoo Finance Stock historical prices</description>
 		<sampleQuery>select * from ydata where symbol in ("YHOO","MSFT") and startDate = "2009-09-11" and endDate = "2010-03-10"</sampleQuery>
 	</meta>
-        <execute><![CDATA[
-                var column_names = '';
-                var have_column_names = false;
-        ]]></execute>
 	<bindings>
 		<select itemPath="quotes" produces="XML">
 			<urls><url>http://ichart.finance.yahoo.com/table.csv</url></urls>
@@ -46,21 +42,17 @@
 				encodedUrl = encodedUrl.replace('e=30','e=' + getDay(endDate));
 				encodedUrl = encodedUrl.replace('f=2010','f=' + getYear(endDate));
 				
-				y.log(have_column_names);
 				var results;
 				var rows, row, item;
-				if (!have_column_names){
-					results = y.query("select * from csv(0,1) where url=@url",{url:encodedUrl});
-				    rows=results.results.row;
-				    for each (row in rows) {					
-				        for each (item in row.*) {
-							var txt = item.text().toString();
-							column_names=column_names + ',' + txt.replace(' ', '_');
-						}
-				    }
-					column_names = column_names.substring(1);
-					have_column_names = true;
+				results = y.query("select * from csv(0,1) where url=@url",{url:encodedUrl});
+				rows=results.results.row;
+				for each (row in rows) {					
+					for each (item in row.*) {
+						var txt = item.text().toString();
+						column_names=column_names + ',' + txt.replace(' ', '_');
+					}
 				}
+				column_names = column_names.substring(1);
 				results = y.query("select * from csv(2,0) where url=@url and columns=@columnsNames",{url:encodedUrl,columnsNames:column_names});
 				/*
 				ichart.finance.yahoo.com column mapping
@@ -70,19 +62,17 @@
 				3 High
 				4 Close
 				5 Volume
-				6 Adj Close
+				6 Adj_Close
 				*/
 				var quotes = <quotes symbol={symbol} />;
 				rows=results.results.row;
 				for each (var row in rows) {
-					quotes.appendChild(<quote date={row.Date.text().toString()}>{row.*}</quote>);
-                                        /*
+					//quotes.appendChild(<quote date={row.Date.text().toString()}>{row.*}</quote>);
 					var this_node = quotes.appendChild(<quote date={row.Date.text().toString()} />);
-                                        for each (var item = 1; item < row.length; item ++) {
-                                                var node_name = row[item].name;
+					for each (var item = 1; item < row.length; item ++) {
+						var node_name = row[item].name;
 						this_node.appendChild(row.item);
 					}
-                                        */
 				}
 				response.object = quotes;
 				
