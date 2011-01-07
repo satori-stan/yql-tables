@@ -71,7 +71,9 @@
 				for each (var row in rows) {
 					//quotes.appendChild(<quote date={row.Date.text().toString()}>{row.*}</quote>);
 					var this_node = quotes.appendChild(<quote date={row.Date.text().toString()} />);
+					y.log(row.length);
 					for each (var item = 1; item < row.length; item ++) {
+						y.log(row[item].name);
 						var node_name = row[item].name;
 						this_node.appendChild(row.item);
 					}
