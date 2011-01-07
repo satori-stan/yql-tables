@@ -44,18 +44,17 @@
 				
 				var results;
 				var rows, row, item;
-				var column_names = '';
+				var column_names = [];
 				var txt = '';
 				results = y.query("select * from csv(0,1) where url=@url",{url:encodedUrl});
 				rows=results.results.row;
 				for each (row in rows) {					
 					for each (item in row.*) {
 						txt = item.text().toString();
-						column_names=column_names + ',' + txt.replace(' ', '_');
+						column_names.push(txt.replace(' ', '_'));
 					}
-				}
-				column_names = column_names.substring(1);
-				results = y.query("select * from csv(2,0) where url=@url and columns=@columnsNames",{url:encodedUrl,columnsNames:column_names});
+				};
+				results = y.query("select * from csv(2,0) where url=@url and columns=@columnsNames",{url:encodedUrl,columnsNames:column_names.join()});
 				/*
 				ichart.finance.yahoo.com column mapping
 				0 Date
@@ -75,7 +74,7 @@
 					var unique_columns = 0;
 					for each (item in row.*) {
 						if (unique_columns > 0){
-							this_node.appendChild({item});
+							this_node.appendChild(<{column_names[unique_columns]}>item</{column_names[unique_columns]}>);
 						}
 						unique_columns++;
 					}
