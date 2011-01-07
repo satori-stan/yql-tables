@@ -74,9 +74,7 @@
 					var unique_columns = 0;
 					for each (item in row.*) {
 						if (unique_columns > 0){
-							y.log(row[item].name);
-							var node_name = row[item].name;
-							this_node.appendChild(row.item);
+							this_node.appendChild(item);
 						}
 						unique_columns++;
 					}
