@@ -45,11 +45,12 @@
 				var results;
 				var rows, row, item;
 				var column_names;
+				var txt = '';
 				results = y.query("select * from csv(0,1) where url=@url",{url:encodedUrl});
 				rows=results.results.row;
 				for each (row in rows) {					
 					for each (item in row.*) {
-						var txt = item.text().toString();
+						txt = item.text().toString();
 						column_names=column_names + ',' + txt.replace(' ', '_');
 					}
 				}
