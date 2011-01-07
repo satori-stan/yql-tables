@@ -74,6 +74,7 @@
 					var unique_columns = 0;
 					for each (item in row.*) {
 						if (unique_columns > 0){
+							y.log(item);
 							var node_name = column_names[unique_columns];
 							this_node += <{node_name}>{item}</{node_name}>;
 						}
