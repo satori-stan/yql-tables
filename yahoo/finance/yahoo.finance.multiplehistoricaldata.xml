@@ -44,7 +44,7 @@
 				
 				var results;
 				var rows, row, item;
-				var column_names;
+				var column_names = '';
 				var txt = '';
 				results = y.query("select * from csv(0,1) where url=@url",{url:encodedUrl});
 				rows=results.results.row;
