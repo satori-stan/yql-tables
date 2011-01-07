@@ -76,7 +76,7 @@
 						if (unique_columns > 0){
 							//var node_name = column_names[unique_columns];
 							//y.log(this_node + '$ ' + node_name + ':' + item);
-							quotes.lastChild.appendChild(item);
+							quotes.lastChild.appendChild({item});
 						}
 						unique_columns++;
 					}
