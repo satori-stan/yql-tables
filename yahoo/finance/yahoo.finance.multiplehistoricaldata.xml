@@ -70,7 +70,8 @@
 				rows=results.results.row;
 				for each (var row in rows) {
 					//quotes.appendChild(<quote date={row.Date.text().toString()}>{row.*}</quote>);
-					var this_node = quotes.appendChild(<quote date={row.Date.text().toString()} />);
+					quotes.appendChild(<quote date={row.Date.text().toString()} />);
+					var this_node = quotes.lastChild;
 					var unique_columns = 0;
 					for each (item in row.*) {
 						if (unique_columns > 0){
